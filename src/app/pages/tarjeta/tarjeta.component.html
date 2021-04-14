@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="subtitulo ion-text-wrap">
+      Score
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="openMenu()">
+        <ion-icon  color="tertiary" slot="icon-only" name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/perfil']" >
+      <ion-icon  color="tertiary" slot="icon-only" name="person-circle"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+<div>
+
+
+</div>
+  
+  <ion-item>
+    <ion-label>Select</ion-label>
+    <ion-select>
+      <ion-select-option value="rojas">Rojas</ion-select-option>
+      <ion-select-option value="brojas">Blanca/Rojas</ion-select-option>
+      <ion-select-option value="blancas">Blancas</ion-select-option>
+      <ion-select-option value="azules">Azules</ion-select-option>
+      <ion-select-option value="negras">Negras</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="normal" position="floating">
+     Handicap
+    </ion-label>
+    <ion-input name="number" class="normal"type="string"></ion-input >
+  </ion-item>
+
+  <div style="text-align: end; margin:10px">
+    <ion-button 
+                (click)="guardarScore()"
+                 expand="block"class="normal" 
+                color="success">Comenzar</ion-button>
+   </div>
+
+
+
+
+
+    
