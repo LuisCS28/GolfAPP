@@ -1,10 +1,15 @@
-<ion-header>
+<ion-header class="header">
   <ion-toolbar color="primary">
-    <ion-title>
+    <ion-title class="subtitulo ion-text-wrap">
       {{ viewTitle }}
     </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="openMenu()">
+        <ion-icon  color="tertiary" slot="icon-only" name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="today()">Today</ion-button>
+      <ion-button (click)="today()">HOY</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,16 +18,16 @@
  
   <!-- Card for adding a new event -->
   <ion-card>
-    <ion-card-header tappable (click)="collapseCard = !collapseCard">
-      <ion-card-title>New Event</ion-card-title>
+    <ion-card-header>
+      <ion-card-title>Nuevo TeeTime</ion-card-title>
     </ion-card-header>
-    <ion-card-content *ngIf="!collapseCard">
+    <ion-card-content>
  
       <ion-item>
-        <ion-input type="text" placeholder="Title" [(ngModel)]="event.title"></ion-input>
+        <ion-input type="text" placeholder="Titulo del evento" [(ngModel)]="event.title"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="text" placeholder="Description" [(ngModel)]="event.desc"></ion-input>
+        <ion-input type="text" placeholder="Descripcion" [(ngModel)]="event.desc"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Start</ion-label>
@@ -32,41 +37,77 @@
         <ion-label>End</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.endTime" [min]="minDate"></ion-datetime>
       </ion-item>
-      <ion-item>
-        <ion-label>All Day?</ion-label>
-        <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
-      </ion-item>
-      <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == ''">Add Event</ion-button>
+      <ion-button fill="outline" expand="block" (click)="addEvent()" [disabled]="event.title == ''">Add TEETIME</ion-button>
  
     </ion-card-content>
   </ion-card>
- 
-  <ion-row>
-    <!-- Change the displayed calendar mode -->
-    <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'month' ? 'primary' : 'secondary'" (click)="changeMode('month')">Month</ion-button>
-    </ion-col>
-    <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'week' ? 'primary' : 'secondary'" (click)="changeMode('week')">Week</ion-button>
-    </ion-col>
-    <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'day' ? 'primary' : 'secondary'" (click)="changeMode('day')">Day</ion-button>
-    </ion-col>
- 
-    <!-- Move back one screen of the slides -->
-    <ion-col size="6" text-left>
-      <ion-button fill="clear" (click)="back()">
-        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-col>
- 
-    <!-- Move forward one screen of the slides -->
-    <ion-col size="6" text-right>
-      <ion-button fill="clear" (click)="next()">
-        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row>
+
+  <!--Card for adding players-->
+  <!--PLAYER 1-->
+  <ion-card>  
+    <ion-card-header>
+      <ion-card-title>Jugador 1</ion-card-title>
+    </ion-card-header>   
+    <ion-card-content>
+      <ion-item>
+        <ion-input type="text" placeholder="Nombre del jugador 1" [(ngModel)]="event.NPlayer1"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Correo electronico" [(ngModel)]="event.CPlayer1"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Numero del documento" [(ngModel)]="event.DPlayer1"></ion-input>
+      </ion-item>
+     <ion-item> 
+      <ion-label>Reserva Caddie</ion-label>
+      <ion-checkbox color="primary" checked="false" [(ngModel)]="Cddie1"></ion-checkbox>
+     </ion-item> 
+    </ion-card-content>
+  </ion-card> 
+
+  <!--PLAYER 2-->
+  <ion-card>  
+    <ion-card-header>
+      <ion-card-title>Jugador 2</ion-card-title>
+    </ion-card-header>   
+    <ion-card-content>
+      <ion-item>
+        <ion-input type="text" placeholder="Nombre del jugador 2" [(ngModel)]="event.NPlayer2"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Correo electronico" [(ngModel)]="event.CPlayer2"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Numero del documento" [(ngModel)]="event.DPlayer2"></ion-input>
+      </ion-item>
+      <ion-item> 
+        <ion-label>Reserva Caddie</ion-label>
+        <ion-checkbox color="primary" checked="false" [(ngModel)]="Cddie2"></ion-checkbox>
+       </ion-item> 
+    </ion-card-content>
+  </ion-card> 
+
+  <!--PLAYER 3-->
+  <ion-card>  
+    <ion-card-header>
+      <ion-card-title>Jugador 3</ion-card-title>
+    </ion-card-header>   
+    <ion-card-content>
+      <ion-item>
+        <ion-input type="text" placeholder="Nombre del jugador 3" [(ngModel)]="event.NPlayer3"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Correo electronico" [(ngModel)]="event.CPlayer3"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Numero del documento" [(ngModel)]="event.DPlayer3"></ion-input>
+      </ion-item>
+           <ion-item> 
+      <ion-label>Reserva Caddie</ion-label>
+      <ion-checkbox color="primary" checked="false" [(ngModel)]="Cddie3"></ion-checkbox>
+     </ion-item> 
+    </ion-card-content>
+  </ion-card> 
  
   <calendar 
   [eventSource]="eventSource" 

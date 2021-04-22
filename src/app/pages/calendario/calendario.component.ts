@@ -2,6 +2,8 @@ import { CalendarComponent } from 'ionic2-calendar';
 import { Component, ViewChild, OnInit, Inject, LOCALE_ID } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { MenuController } from '@ionic/angular';
  
 @Component({
   selector: 'app-pages',
@@ -15,7 +17,11 @@ export class Calendariocomponent implements OnInit {
     desc: '',
     startTime: '',
     endTime: '',
-    allDay: false
+    Cddie1: '' ,Cddie2: '', Cddie3: '',
+    NPlayer1: '', NPlayer2: '', NPlayer3: '',
+    CPlayer1: '', CPlayer2: '', CPlayer3: '',
+    DPlayer1: '', DPlayer2: '', DPlayer3: '',
+
   };
  
   minDate = new Date().toISOString();
@@ -30,7 +36,19 @@ export class Calendariocomponent implements OnInit {
  
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
  
-  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string) { }
+  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private db: AngularFirestore, public menuController: MenuController) {
+    this.db.collection(`events`).snapshotChanges().subscribe(colSnap => {
+			this.eventSource = [];
+			colSnap.forEach(snap => {
+				const event: any = snap.payload.doc.data();
+				event.id = snap.payload.doc.id;
+				event.startTime = event.startTime.toDate();
+				event.endTime = event.endTime.toDate();
+				console.log(event);
+				this.eventSource.push(event);
+			});
+		});
+   }
  
   ngOnInit() {
     this.resetEvent();
@@ -40,9 +58,13 @@ export class Calendariocomponent implements OnInit {
     this.event = {
       title: '',
       desc: '',
+      Cddie1: '', Cddie2: '', Cddie3: '',
       startTime: new Date().toISOString(),
       endTime: new Date().toISOString(),
-      allDay: false
+      NPlayer1: '', NPlayer2: '', NPlayer3: '',
+      CPlayer1: '', CPlayer2: '', CPlayer3: '',
+      DPlayer1: '', DPlayer2: '', DPlayer3: '',
+
     };
   }
  
@@ -52,18 +74,26 @@ export class Calendariocomponent implements OnInit {
       title: this.event.title,
       startTime:  new Date(this.event.startTime),
       endTime: new Date(this.event.endTime),
-      allDay: this.event.allDay,
-      desc: this.event.desc
+      desc: this.event.desc,
+      //nombre de los jugadores
+      NPlayer1: this.event.NPlayer1,
+      NPlayer2: this.event.NPlayer2,
+      NPlayer3: this.event.NPlayer3,
+      //correo de los jugadores
+      CPlayer1: this.event.CPlayer1,
+      CPlayer2: this.event.CPlayer2,
+      CPlayer3: this.event.CPlayer3,
+      //documento de los jugaroes
+      DPlayer1: this.event.DPlayer1,
+      DPlayer2: this.event.DPlayer2,
+      DPlayer3: this.event.DPlayer3,     
+      //reserva de caddie 
+      Cddie1: this.event.Cddie1, 
+      Cddie2: this.event.Cddie2, 
+      Cddie3: this.event.Cddie3
     }
- 
-    if (eventCopy.allDay) {
-      let start = eventCopy.startTime;
-      let end = eventCopy.endTime;
- 
-      eventCopy.startTime = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
-      eventCopy.endTime = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate() + 1));
-    }
- 
+
+    this.db.collection('events').add(eventCopy);
     this.eventSource.push(eventCopy);
     this.myCal.loadEvents();
     this.resetEvent();
@@ -108,12 +138,16 @@ async onEventSelected(event) {
   });
   alert.present();
 }
- 
-// Time slot was clicked
+ // Time slot was clicked
 onTimeSelected(ev) {
   let selected = new Date(ev.selectedTime);
   this.event.startTime = selected.toISOString();
-  selected.setHours(selected.getHours() + 1);
+  selected.setMinutes(selected.getMinutes() + 15);
   this.event.endTime = (selected.toISOString());
+}
+
+openMenu() { 
+  console.log('se abrio esta joda');
+  this.menuController.toggle('principal');
 }
 }
